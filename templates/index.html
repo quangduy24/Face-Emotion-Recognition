@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Emotion Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Facial Emotion Recognition</h1>
+            <div class="authors">
+                <div class="students">
+                    <h3>Học viên:</h3>
+                    <ul>
+                        <li>Trương Nguyễn Quang Duy</li>
+                        <li>Trần Như Thuận</li>
+                        <li>Nguyễn Phan Hoàng Sơn</li>
+                    </ul>
+                </div>
+                <div class="professor">
+                    <h3>Giảng viên hướng dẫn:</h3>
+                    <p>PGS.TS. Hoàng Văn Dũng</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="controls">
+                <div class="mode-toggle">
+                    <button id="camera-mode" class="active">Camera</button>
+                    <button id="upload-mode">Upload Image</button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="start-btn" class="primary-btn">Start</button>
+                    <button id="stop-btn" class="primary-btn" disabled>Stop</button>
+                    <button id="capture-btn" class="primary-btn">Capture</button>
+                    <input type="file" id="file-input" accept="image/*" style="display: none;">
+                    <button id="upload-btn" class="primary-btn" style="display: none;">Choose File</button>
+                </div>
+            </div>
+
+            <div class="display-area">
+                <div class="video-container">
+                    <video id="video" autoplay muted></video>
+                    <canvas id="canvas"></canvas>
+                    <img id="uploaded-image" style="display: none;">
+                </div>
+
+                <div class="results-container">
+                    <h2>Emotion Detection Results</h2>
+                    <div class="emotion-results">
+                        <div class="emotion-chart">
+                            <canvas id="emotion-chart"></canvas>
+                        </div>
+                        <div class="emotion-list">
+                            {% for emotion in ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral'] %}
+                            <div class="emotion-item">
+                                <div class="emotion-label" style="background-color: {{ emotion_colors[emotion] }}">
+                                    {{ emotion }}
+                                </div>
+                                <div class="emotion-bar-container">
+                                    <div class="emotion-bar" id="{{ emotion.lower() }}-bar" style="width: 0%; background-color: {{ emotion_colors[emotion] }}"></div>
+                                    <span class="emotion-percentage" id="{{ emotion.lower() }}-percentage">0%</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="detected-emotion">
+                        <h3>Detected Emotion: <span id="primary-emotion">None</span></h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Facial Emotion Recognition Project</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
